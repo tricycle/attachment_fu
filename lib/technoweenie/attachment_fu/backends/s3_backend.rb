@@ -189,8 +189,8 @@ module Technoweenie # :nodoc:
             config = config[base.attachment_options[:config_scope]] if base.attachment_options[:config_scope]
 
             @@s3_config = config.symbolize_keys
-          #rescue
-          #  raise ConfigFileNotFoundError.new('File %s not found' % @@s3_config_path)
+          rescue
+           raise ConfigFileNotFoundError.new('File %s not found' % @@s3_config_path)
           end
 
           bucket_key = base.attachment_options[:bucket_key]
