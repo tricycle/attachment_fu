@@ -487,10 +487,11 @@ module Technoweenie # :nodoc:
         def attachment_attributes_valid?
           [:size, :content_type].each do |attr_name|
             enum = attachment_options[attr_name]
+            attr_value = attr_name == :size ? send(attr_name).to_i : send(attr_name)
             if Object.const_defined?(:I18n) # Rails >= 2.2
-              errors.add attr_name, I18n.translate("activerecord.errors.messages.inclusion", attr_name => enum) unless enum.nil? || enum.include?(send(attr_name))
+              errors.add attr_name, I18n.translate("activerecord.errors.messages.inclusion", attr_name => enum) unless enum.nil? || enum.include?(attr_value)
             else
-              errors.add attr_name, ActiveRecord::Errors.default_error_messages[:inclusion] unless enum.nil? || enum.include?(send(attr_name))
+              errors.add attr_name, ActiveRecord::Errors.default_error_messages[:inclusion] unless enum.nil? || enum.include?(attr_value)
             end
           end
         end
