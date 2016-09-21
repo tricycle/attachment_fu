@@ -339,7 +339,7 @@ module Technoweenie # :nodoc:
             :content_type             => 'image/jpeg',
             :filename                 => jpeg_thumbnail_name_for(file_name_suffix),
             :thumbnail_resize_options => size
-          }, :without_protection => true)
+          })
           callback_with_args :before_thumbnail_saved, thumb
           thumb.save!
         end
@@ -499,8 +499,8 @@ module Technoweenie # :nodoc:
         # Initializes a new thumbnail with the given suffix.
         def find_or_initialize_thumbnail(file_name_suffix)
           respond_to?(:parent_id) ?
-            thumbnail_class.find_or_initialize_by_thumbnail_and_parent_id(file_name_suffix.to_s, id) :
-            thumbnail_class.find_or_initialize_by_thumbnail(file_name_suffix.to_s)
+            thumbnail_class.find_or_initialize_by(thumbnail: file_name_suffix.to_s, parent_id: id) :
+            thumbnail_class.find_or_initialize_by(thumbnail: file_name_suffix.to_s)
         end
 
         # Stub for a #process_attachment method in a processor
